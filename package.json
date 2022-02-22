@@ -1,8 +1,8 @@
 {
-  "name": "valorant-state",
+  "name": "module-valorant-state",
   "version": "1.5.0",
   "description": "Module that provides state integration for Valorant games",
-  "author": "Himyu",
+  "author": "RCVolus",
   "license": "MIT",
   "toolkit": {
     "modes": [
@@ -13,9 +13,9 @@
     },
     "needsBuild": true
   },
-  "dependencies": {
+  "devDependencies": {
     "typescript": "^4.3.2",
-    "league-prod-toolkit": "file:../.."
+    "rcv-prod-toolkit-types": "^1.0.1"
   },
   "scripts": {
     "build": "tsc"
