@@ -1,4 +1,4 @@
-import { PluginContext } from 'rcv-prod-toolkit-types'
+import { PluginContext } from '@rcv-prod-toolkit/types'
 import { ValoState } from './controller/ValoState';
 import preGameTestData from './data/Valo-Champselect-data.json'
 import matchTestData from './data/Post-Game-data.json'

@@ -1,4 +1,4 @@
-import type { PluginContext } from 'rcv-prod-toolkit-types'
+import type { PluginContext } from '@rcv-prod-toolkit/types'
 import { PregameState } from '../types/Enums'
 import { PreGameState } from '../types/GameSets'
 import { PreGame as PreGameType, PreGameInit, Team } from '../types/PreGame'

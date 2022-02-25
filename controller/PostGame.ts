@@ -1,4 +1,4 @@
-import type { PluginContext } from 'rcv-prod-toolkit-types'
+import type { PluginContext } from '@rcv-prod-toolkit/types'
 import { PostGameState } from '../types/GameSets'
 import { Match as MatchData } from '../types/Match'
 

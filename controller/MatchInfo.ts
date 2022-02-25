@@ -1,4 +1,4 @@
-import type { PluginContext } from 'rcv-prod-toolkit-types'
+import type { PluginContext } from '@rcv-prod-toolkit/types'
 import { GameMode, GameType, Map } from '../types/Enums'
 import { MatchInfoState } from '../types/GameSets'
 import { PlayerName } from '../types/Player'
