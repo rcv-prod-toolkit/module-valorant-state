@@ -3,9 +3,9 @@ import { ValoState } from './controller/ValoState';
 import preGameTestData from './data/Valo-Champselect-data.json'
 import matchTestData from './data/Post-Game-data.json'
 
-const namespace = 'valorant-state';
-
 module.exports = async (ctx: PluginContext) => {
+  const namespace = ctx.plugin.module.getName();
+
   // Register new UI page
   ctx.LPTE.emit({
     meta: {
@@ -14,9 +14,9 @@ module.exports = async (ctx: PluginContext) => {
       version: 1
     },
     pages: [{
-      name: 'OP Valorant Game State',
+      name: 'Valo: Game State',
       frontend: 'frontend',
-      id: 'op-valorant-game'
+      id: `op-${namespace}`
     }]
   });
 

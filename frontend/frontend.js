@@ -1,4 +1,4 @@
-const namespace = 'valorant-state';
+const namespace = 'module-valorant-state';
 
 function runTest () {
   LPTE.emit({
