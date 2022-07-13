@@ -1,6 +1,6 @@
 {
   "name": "module-valorant-state",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "description": "Module that provides state integration for Valorant games",
   "author": "RCVolus",
   "license": "MIT",
