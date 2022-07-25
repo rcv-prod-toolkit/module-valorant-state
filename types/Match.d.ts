@@ -37,7 +37,7 @@ export interface Player {
   gameName: string
   tagLine: string
   platformInfo: PlatformInfo
-  teamId: "Red"	| "Blue" | "Neutral"
+  teamId: 'Red' | 'Blue' | 'Neutral'
   partyId: string
   characterId?: string
   stats?: PlayerStats
@@ -59,12 +59,12 @@ export interface PlatformInfo {
 }
 
 export interface PlayerStats {
-  score: number	
-  roundsPlayed: number	
-  kills: number	
-  deaths: number	
-  assists: number	
-  playtimeMillis: number	
+  score: number
+  roundsPlayed: number
+  kills: number
+  deaths: number
+  assists: number
+  playtimeMillis: number
   abilityCasts: AbilityCasts
 }
 
@@ -75,9 +75,9 @@ export interface RoundDamage {
 }
 
 export interface AbilityCasts {
-  grenadeCasts: number	
-  ability1Casts: number	
-  ability2Casts: number	
+  grenadeCasts: number
+  ability1Casts: number
+  ability2Casts: number
   ultimateCasts: number
 }
 
@@ -92,7 +92,7 @@ export interface NewPlayerExperienceDetails {
   adaptiveBots: PlayerExperienceDetail.AdaptiveBots
   ability: PlayerExperienceDetail.Default
   bombPlant: PlayerExperienceDetail.Default
-  defendBombSite: PlayerExperienceDetail.DefendBombSite,
+  defendBombSite: PlayerExperienceDetail.DefendBombSite
   settingStatus: PlayerExperienceDetail.SettingStatus
 }
 
@@ -101,7 +101,7 @@ export namespace PlayerExperienceDetail {
     idleTimeMillis: number
     objectiveCompleteTimeMillis: number
   }
-  
+
   export interface AdaptiveBots extends Default {
     adaptiveBotAverageDurationMillisAllAttempts: number
     adaptiveBotAverageDurationMillisFirstAttempt: number
@@ -119,34 +119,34 @@ export namespace PlayerExperienceDetail {
 }
 
 export interface Coach {
-  puuid: string	
+  puuid: string
   teamId: string
 }
 
 export interface Team {
-  teamId: "Red"	| "Blue"
-  won: boolean	
-  roundsPlayed: number	
+  teamId: 'Red' | 'Blue'
+  won: boolean
+  roundsPlayed: number
   roundsWon: number
   numPoints: number
 }
 
 export interface RoundResults {
-  roundNum: number	
-  roundResult: string	
-  roundCeremony: string	
-  winningTeam: "Red" | "Blue"
+  roundNum: number
+  roundResult: string
+  roundCeremony: string
+  winningTeam: 'Red' | 'Blue'
   bombPlanter?: string
   bombDefuser?: string
-  plantRoundTime: number	
+  plantRoundTime: number
   plantPlayerLocations?: PlayerLocations[]
-  plantLocation: Location	
-  plantSite: string	
-  defuseRoundTime: number	
-  defusePlayerLocations?: PlayerLocations[]	
-  defuseLocation: Location	
+  plantLocation: Location
+  plantSite: string
+  defuseRoundTime: number
+  defusePlayerLocations?: PlayerLocations[]
+  defuseLocation: Location
   playerStats: PlayerRoundStats
-  roundResultCode: string	
+  roundResultCode: string
 }
 
 export interface PlayerLocations {
@@ -161,10 +161,10 @@ export interface Location {
 }
 
 export interface PlayerRoundStats {
-  subject: string	
+  subject: string
   kills: Kill[]
   damage: Damage
-  score: null	
+  score: null
   economy: Economy
   ability: Ability
   wasAfk: boolean
@@ -178,7 +178,7 @@ export interface Kill {
   round?: number
   killer: string
   victim: string
-  victimLocation: Location	
+  victimLocation: Location
   assistants: string[]
   playerLocations: PlayerLocations[]
   finishingDamage: FinishingDamage
@@ -199,16 +199,16 @@ export interface FinishingDamage {
 }
 
 export interface Economy {
-  loadoutValue: number	
-  weapon: string	
-  armor: string	
-  remaining: number	
+  loadoutValue: number
+  weapon: string
+  armor: string
+  remaining: number
   spent: number
 }
 
 export interface Ability {
-  grenadeEffects?: string	
-  ability1Effects?: string	
-  ability2Effects?: string	
+  grenadeEffects?: string
+  ability1Effects?: string
+  ability2Effects?: string
   ultimateEffects?: string
 }

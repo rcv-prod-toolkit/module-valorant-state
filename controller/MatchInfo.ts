@@ -10,16 +10,16 @@ export class MatchInfo {
   private _updated = 0
   private _deleted = 0
 
-  private id ? : string
-  private participants ? : PlayerName[] 
-  private map ? : Map
-  private gameMode ? : GameMode
-  private gameType ? : GameType
-  private teams ? : Team[]
+  private id?: string
+  private participants?: PlayerName[]
+  private map?: Map
+  private gameMode?: GameMode
+  private gameType?: GameType
+  private teams?: Team[]
 
-  constructor (private ctx: PluginContext) {}
+  constructor(private ctx: PluginContext) {}
 
-  public init (data : PreGameInit) {
+  public init(data: PreGameInit) {
     this._available = true
     this._created = new Date().getTime()
     this._updated = new Date().getTime()
@@ -32,12 +32,12 @@ export class MatchInfo {
     this.gameType = data.gameType
   }
 
-  public updateTeam (teams : Team[]) {
+  public updateTeam(teams: Team[]) {
     this._updated = new Date().getTime()
     this.teams = teams
   }
 
-  public delete () {
+  public delete() {
     this.id = undefined
     this.participants = undefined
     this.teams = undefined
@@ -48,8 +48,8 @@ export class MatchInfo {
     this._available = false
     this._deleted = new Date().getTime()
   }
-  
-  public getState () : MatchInfoState {
+
+  public getState(): MatchInfoState {
     return {
       _available: this._available,
       _created: this._created,
@@ -60,7 +60,7 @@ export class MatchInfo {
       teams: this.teams,
       map: this.map,
       gameMode: this.gameMode,
-      gameType: this.gameType,
+      gameType: this.gameType
     }
   }
 }

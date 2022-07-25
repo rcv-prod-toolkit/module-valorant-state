@@ -8,11 +8,11 @@ export class PostGame {
   private _updated = 0
   private _deleted = 0
 
-  private data ? : MatchData
+  private data?: MatchData
 
-  constructor (private ctx: PluginContext) {}
+  constructor(private ctx: PluginContext) {}
 
-  public init (data : MatchData) {
+  public init(data: MatchData) {
     this._available = true
     this._created = new Date().getTime()
     this._updated = new Date().getTime()
@@ -20,13 +20,13 @@ export class PostGame {
     this.data = data
   }
 
-  public delete () {
+  public delete() {
     this.data = undefined
     this._available = false
     this._deleted = new Date().getTime()
   }
-  
-  public getState () : PostGameState {
+
+  public getState(): PostGameState {
     return {
       _available: this._available,
       _created: this._created,

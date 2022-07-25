@@ -5,8 +5,8 @@ import { PregameState } from './Enums'
 import { MatchStateMatch } from './Match'
 
 export interface GameSets {
-  [k: number] : {
-    loopState: "MENUS" | "PREGAME" | "INGAME"
+  [k: number]: {
+    loopState: 'MENUS' | 'PREGAME' | 'INGAME'
     matchInfo: MatchInfoState
     preGame: PreGameState
     postGame: PostGameState
@@ -14,26 +14,26 @@ export interface GameSets {
 }
 
 export interface DefaultState {
-  _available : boolean
-  _created : number
-  _updated : number
-  _deleted : number
+  _available: boolean
+  _created: number
+  _updated: number
+  _deleted: number
 }
 
 export interface MatchInfoState extends DefaultState {
-  id ? : string
-  participants ? : PlayerName[] 
-  map ? : Map
-  gameMode ? : GameMode
-  gameType ? : GameType
-  teams ? : Team[]
+  id?: string
+  participants?: PlayerName[]
+  map?: Map
+  gameMode?: GameMode
+  gameType?: GameType
+  teams?: Team[]
 }
 
 export interface PreGameState extends DefaultState {
-  teams ? : Team[]
+  teams?: Team[]
   timer: {
-    phase ? : PregameState
-    timeLeftUntil : number
+    phase?: PregameState
+    timeLeftUntil: number
   }
 }
 

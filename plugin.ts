@@ -1,10 +1,10 @@
 import { PluginContext } from '@rcv-prod-toolkit/types'
-import { ValoState } from './controller/ValoState';
+import { ValoState } from './controller/ValoState'
 import preGameTestData from './data/Valo-Champselect-data.json'
 import matchTestData from './data/Post-Game-data.json'
 
 module.exports = async (ctx: PluginContext) => {
-  const namespace = ctx.plugin.module.getName();
+  const namespace = ctx.plugin.module.getName()
 
   // Register new UI page
   ctx.LPTE.emit({
@@ -13,17 +13,19 @@ module.exports = async (ctx: PluginContext) => {
       namespace: 'ui',
       version: 1
     },
-    pages: [{
-      name: 'Valo: Game State',
-      frontend: 'frontend',
-      id: `op-${namespace}`
-    }]
-  });
+    pages: [
+      {
+        name: 'Valo: Game State',
+        frontend: 'frontend',
+        id: `op-${namespace}`
+      }
+    ]
+  })
 
   const state = new ValoState(ctx)
 
   // Answer requests to get state
-  ctx.LPTE.on(namespace, 'request', e => {
+  ctx.LPTE.on(namespace, 'request', (e) => {
     ctx.LPTE.emit({
       meta: {
         namespace: 'reply',
@@ -32,14 +34,16 @@ module.exports = async (ctx: PluginContext) => {
       },
       state: state.getState()
     })
-  });
+  })
 
-  ctx.LPTE.on(namespace, 'set-mvp', e => {
+  ctx.LPTE.on(namespace, 'set-mvp', (e) => {
     const currentState = state.getState()
 
     if (!currentState.postGame._available) return
 
-    const player = currentState.postGame.players?.find(p => p.subject === e.subject)
+    const player = currentState.postGame.players?.find(
+      (p) => p.subject === e.subject
+    )
     state.mvp = player
 
     ctx.LPTE.emit({
@@ -50,9 +54,9 @@ module.exports = async (ctx: PluginContext) => {
       },
       mvp: player
     })
-  });
+  })
 
-  ctx.LPTE.on(namespace, 'set-round', e => {
+  ctx.LPTE.on(namespace, 'set-round', (e) => {
     state.gameSets[e.round] = state.getState()
 
     ctx.LPTE.emit({
@@ -63,9 +67,9 @@ module.exports = async (ctx: PluginContext) => {
       },
       rounds: state.gameSets
     })
-  });
+  })
 
-  ctx.LPTE.on(namespace, 'clear-round', e => {
+  ctx.LPTE.on(namespace, 'clear-round', (e) => {
     state.gameSets = {}
 
     ctx.LPTE.emit({
@@ -76,9 +80,9 @@ module.exports = async (ctx: PluginContext) => {
       },
       rounds: state.gameSets
     })
-  });
+  })
 
-  ctx.LPTE.on(namespace, 'get-rounds', e => {
+  ctx.LPTE.on(namespace, 'get-rounds', (e) => {
     ctx.LPTE.emit({
       meta: {
         namespace: 'reply',
@@ -87,9 +91,9 @@ module.exports = async (ctx: PluginContext) => {
       },
       rounds: state.gameSets
     })
-  });
+  })
 
-  ctx.LPTE.on('valo', 'valo-pre-game-create', e => {
+  ctx.LPTE.on('valo', 'valo-pre-game-create', (e) => {
     state.sessionLoopState = e.state
     state.matchInfo.init(e.data)
     state.preGame.init(e.data)
@@ -104,8 +108,8 @@ module.exports = async (ctx: PluginContext) => {
       },
       state: state.getState()
     })
-  });
-  ctx.LPTE.on('valo', 'valo-pre-game-update', e => {
+  })
+  ctx.LPTE.on('valo', 'valo-pre-game-update', (e) => {
     state.preGame.update(e.data)
     ctx.LPTE.emit({
       meta: {
@@ -115,8 +119,8 @@ module.exports = async (ctx: PluginContext) => {
       },
       state: state.getState()
     })
-  });
-  ctx.LPTE.on('valo', 'valo-pre-game-delete', e => {
+  })
+  ctx.LPTE.on('valo', 'valo-pre-game-delete', (e) => {
     state.preGame.delete(e.data)
     state.matchInfo.updateTeam(e.data.Teams)
     ctx.LPTE.emit({
@@ -127,9 +131,9 @@ module.exports = async (ctx: PluginContext) => {
       },
       state: state.getState()
     })
-  });
+  })
 
-  ctx.LPTE.on('valo', 'valo-game-create', e => {
+  ctx.LPTE.on('valo', 'valo-game-create', (e) => {
     state.sessionLoopState = e.state
 
     ctx.LPTE.emit({
@@ -140,9 +144,9 @@ module.exports = async (ctx: PluginContext) => {
       },
       state: state.getState()
     })
-  });
+  })
 
-  ctx.LPTE.on('valo', 'valo-post-game-create', e => {
+  ctx.LPTE.on('valo', 'valo-post-game-create', (e) => {
     state.sessionLoopState = e.state
     state.postGame.init(e.data)
     ctx.LPTE.emit({
@@ -153,7 +157,7 @@ module.exports = async (ctx: PluginContext) => {
       },
       state: state.getState()
     })
-  });
+  })
 
   // Emit event that we're ready to operate
   ctx.LPTE.emit({
@@ -163,12 +167,12 @@ module.exports = async (ctx: PluginContext) => {
       version: 1
     },
     status: 'RUNNING'
-  });
+  })
 
-  ctx.LPTE.on(namespace, 'run-test', e => {
+  ctx.LPTE.on(namespace, 'run-test', (e) => {
     state.matchInfo.init(preGameTestData[0] as any)
     state.preGame.init(preGameTestData[0] as any)
-    
+
     for (let i = 1; i < preGameTestData.length; i++) {
       setTimeout(() => {
         ctx.LPTE.emit({
@@ -190,5 +194,5 @@ module.exports = async (ctx: PluginContext) => {
       },
       data: matchTestData
     })
-  });
-};
+  })
+}

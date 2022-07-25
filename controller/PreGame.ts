@@ -4,19 +4,18 @@ import { PreGameState } from '../types/GameSets'
 import { PreGame as PreGameType, PreGameInit, Team } from '../types/PreGame'
 
 export class PreGame {
-
   private _available = false
   private _created = 0
   private _updated = 0
   private _deleted = 0
 
-  private phase ? : PregameState
+  private phase?: PregameState
   private timeLeftUntil = 0
-  private teams ? : Team[]
+  private teams?: Team[]
 
-  constructor (private ctx: PluginContext) {}
+  constructor(private ctx: PluginContext) {}
 
-  public init (data : PreGameInit) {
+  public init(data: PreGameInit) {
     this._available = true
     this._created = new Date().getTime()
     this._updated = new Date().getTime()
@@ -26,21 +25,21 @@ export class PreGame {
     this.teams = data.teams
   }
 
-  public update (data : PreGameType) {
+  public update(data: PreGameType) {
     this._updated = new Date().getTime()
     this.phase = data.PregameState
     this.teams = data.Teams
   }
 
-  public delete (data : PreGameType) {
+  public delete(data: PreGameType) {
     /* this._available = false
     this._deleted = new Date().getTime()
     this._updated = new Date().getTime()
     this.phase = data.PregameState
     this.teams = data.Teams */
   }
-  
-  public getState () : PreGameState {
+
+  public getState(): PreGameState {
     return {
       _available: this._available,
       _created: this._created,
