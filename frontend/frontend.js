@@ -1,10 +1,8 @@
-const namespace = 'module-valorant-state'
-
 function runTest() {
   LPTE.emit({
     meta: {
-      namespace,
-      type: 'run-test',
+      namespace: "module-valorant-state",
+      type: "run-test",
       version: 1
     }
   })
@@ -13,8 +11,8 @@ function runTest() {
 function setRound(round) {
   LPTE.emit({
     meta: {
-      namespace,
-      type: 'set-round',
+      namespace: "module-valorant-state",
+      type: "set-round",
       version: 1
     },
     round
@@ -24,8 +22,8 @@ function setRound(round) {
 function clearGames() {
   LPTE.emit({
     meta: {
-      namespace,
-      type: 'clear-round',
+      namespace: "module-valorant-state",
+      type: "clear-round",
       version: 1
     }
   })
@@ -34,79 +32,72 @@ function clearGames() {
 function setMvp() {
   LPTE.emit({
     meta: {
-      namespace,
-      type: 'set-mvp',
+      namespace: "module-valorant-state",
+      type: "set-mvp",
       version: 1
     },
-    subject: $('#mvp').val()
+    subject: document.querySelector("#mvp").value
   })
 }
 
 const setStatus = (componentName, component) => {
   // Status
   if (component._available) {
-    $(`#${componentName}-status`).html('<span class="green">Live</span>')
-    $(`#${componentName}-available`).text(
-      new Date(component._created).toLocaleString()
-    )
-    $(`#${componentName}-update`).text(
-      new Date(component._updated).toLocaleString()
-    )
+    document.querySelector(`#${componentName}-status`).innerHTML = '<span class="green">Live</span>'
+    document.querySelector(`#${componentName}-available`).innerHTML = new Date(component._created).toLocaleString()
+
+    document.querySelector(`#${componentName}-update`).innerHTML = new Date(component._updated).toLocaleString()
   } else {
-    $(`#${componentName}-status`).html('<span class="orange">Not Live</span>')
+    document.querySelector(`#${componentName}-status`).innerHTML = '<span class="orange">Not Live</span>'
     if (component._deleted) {
-      $(`#${componentName}-unavailable`).text(
-        new Date(component._deleted).toLocaleString()
-      )
+      document.querySelector(`#${componentName}-unavailable`).innerHTML = new Date(component._deleted).toLocaleString()
     }
   }
 }
 
 const updateUi = (state) => {
-  $('#loopState').html(state.loopState)
+  document.querySelector("#loopState").innerHTML = state.loopState
 
   // Flow
-  setStatus('valo-match-info', state.matchInfo)
-  setStatus('valo-pre-game', state.preGame)
+  setStatus("valo-match-info", state.matchInfo)
+  setStatus("valo-pre-game", state.preGame)
   /* setStatus('valo-in-game', state.inGame) */
-  setStatus('valo-post-game', state.postGame)
+  setStatus("valo-post-game", state.postGame)
 
-  $('#mvp').val(state.mvp?.subject)
+  document.querySelector("#mvp").value = state.mvp?.subject
 }
 
 const updateMvpList = (state) => {
   if (state.postGame._available) {
-    var save = $('#mvp option:selected').detach()
-    $('#mvp').empty()
-    $('#mvp').append(save)
+    var save = document.querySelector("#mvp option:selected").remove()
+    document.querySelector("#mvp").innerHTML = ''
+    document.querySelector("#mvp").appendChild(save)
     for (const player of state.postGame.players) {
-      if (player.teamId !== 'Neutral') {
-        $('#mvp').append(new Option(player.gameName, player.subject))
+      if (player.teamId !== "Neutral") {
+        document.querySelector("#mvp").appendChild(new Option(player.gameName, player.subject))
       }
     }
   }
 
-  $('#mvp').val(state.mvp?.subject)
+  document.querySelector("#mvp").value = state.mvp?.subject
 }
 
 const updateRounds = (rounds) => {
-  console.log(rounds)
-
   for (i = 0; i < 5; i++) {
-    const currentBtn = $(`#r${i + 1}`)
+    const currentBtn = document.querySelector(`#r${i + 1}`)
     const roundsLength = Object.keys(rounds).length
 
     if (i + 1 <= roundsLength) {
-      currentBtn.addClass('btn-primary')
-      currentBtn.removeClass('btn-secondary')
+      currentBtn.classList.add("btn-primary")
+      currentBtn.classList.remove("btn-secondary")
     } else if (i + 1 === roundsLength + 1) {
-      currentBtn.prop('disabled', false)
-      currentBtn.removeClass('btn-primary')
-      currentBtn.addClass('btn-secondary')
+      currentBtn.setAttribute("disabled", false)
+      currentBtn.classList.remove("btn-primary")
+      currentBtn.classList.add("btn-secondary")
     } else {
-      currentBtn.prop('disabled', true)
-      currentBtn.removeClass('btn-primary')
-      currentBtn.addClass('btn-secondary')
+      currentBtn.setAttribute("disabled", true)
+      currentBtn.classList.remove("btn-primary")
+      currentBtn.classList.add("btn-secondary")
     }
   }
 }
@@ -114,8 +105,8 @@ const updateRounds = (rounds) => {
 LPTE.onready(async () => {
   const response = await LPTE.request({
     meta: {
-      namespace,
-      type: 'request',
+      namespace: "module-valorant-state",
+      type: "request",
       version: 1
     }
   })
@@ -125,35 +116,35 @@ LPTE.onready(async () => {
 
   const roundsResponse = await LPTE.request({
     meta: {
-      namespace,
-      type: 'get-rounds',
+      namespace: "module-valorant-state",
+      type: "get-rounds",
       version: 1
     }
   })
   updateRounds(roundsResponse.rounds)
 
-  LPTE.on('valorant-state-pre-game', 'create', (e) => {
+  LPTE.on("valorant-state-pre-game", "create", (e) => {
     updateUi(e.state)
   })
 
-  LPTE.on('valorant-state-pre-game', 'update', (e) => {
+  LPTE.on("valorant-state-pre-game", "update", (e) => {
     updateUi(e.state)
   })
 
-  LPTE.on('valorant-state-game', 'create', (e) => {
+  LPTE.on("valorant-state-game", "create", (e) => {
     updateUi(e.state)
   })
 
-  LPTE.on('valorant-state-post-game', 'create', (e) => {
+  LPTE.on("valorant-state-post-game", "create", (e) => {
     updateUi(e.state)
     updateMvpList(e.state)
   })
 
-  LPTE.on('valorant-state-rounds', 'update', (e) => {
+  LPTE.on("valorant-state-rounds", "update", (e) => {
     updateRounds(e.rounds)
   })
 
-  LPTE.on('valorant-state-mvp', 'update', (e) => {
-    $('#mvp').val(e.mvp?.subject)
+  LPTE.on("valorant-state-mvp", "update", (e) => {
+    document.querySelector("#mvp").value = e.mvp?.subject
   })
 })
