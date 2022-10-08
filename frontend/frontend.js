@@ -68,8 +68,9 @@ const updateUi = (state) => {
 }
 
 const updateMvpList = (state) => {
+  console.log(state)
   if (state.postGame._available) {
-    var save = document.querySelector("#mvp option:selected").remove()
+    var save = new Option()
     document.querySelector("#mvp").innerHTML = ''
     document.querySelector("#mvp").appendChild(save)
     for (const player of state.postGame.players) {
