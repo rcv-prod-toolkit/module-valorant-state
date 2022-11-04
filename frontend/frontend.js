@@ -75,7 +75,6 @@ const updateUi = (state) => {
 }
 
 const updateMvpList = (state) => {
-  console.log(state)
   if (state.postGame._available) {
     var save = new Option()
     document.querySelector('#mvp').innerHTML = ''
